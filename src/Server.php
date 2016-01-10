@@ -52,7 +52,7 @@ class Server implements ServerInterface
         stream_set_blocking($this->socket, 0);
 
         $this->loop->addReadStream($this->socket, function ($master) {
-            $newSocket = stream_socket_accept($master);
+            $newSocket = @stream_socket_accept($master, 0);
 
             if (false === $newSocket) {
                 $this->emit('error', [new \RuntimeException('Error accepting new connection')]);
