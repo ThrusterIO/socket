@@ -44,7 +44,12 @@ class Server implements ServerInterface
         $this->socket = @stream_socket_server("tcp://$host:$port", $errno, $errstr);
 
         if (false === $this->socket) {
-            $message = "Could not bind to tcp://$host:$port: $errstr";
+            $message = sprintf(
+                'Could not bind to tcp://%s:%s: %s',
+                $host,
+                $port,
+                $errstr
+            );
 
             throw new ConnectionException($message, $errno);
         }
